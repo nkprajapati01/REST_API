@@ -78,9 +78,9 @@ app.post('/bfhl', (req, res) => {
 
             allAlphabets.forEach((char, index) => {
                 if (index % 2 === 0) {
-                    concat_string += char.toLowerCase();
-                } else {
                     concat_string += char.toUpperCase();
+                } else {
+                    concat_string += char.toLowerCase();
                 }
             });
         }
