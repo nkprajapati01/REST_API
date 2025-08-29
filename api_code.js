@@ -4,38 +4,33 @@ const cors = require('cors');
 
 const app = express();
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// User details (replace with your own)
 const USER_DATA = {
-    user_id: "neeraj_01012001",
-    email: "neeraj@gmail.com", 
-    roll_number: "ABCD123"
+    user_id: "neeraj-06122003",
+    email: "neerajkp1920@gmail.com", 
+    roll_number: "22BCE11178"
 };
 
-// Helper function to check if a string is a number
 function isNumber(str) {
     return !isNaN(str) && !isNaN(parseFloat(str));
 }
 
-// Helper function to check if a string is alphabetic
 function isAlphabet(str) {
     return /^[a-zA-Z]+$/.test(str);
 }
 
-// Helper function to check if a string is a special character
 function isSpecialChar(str) {
     return !/^[a-zA-Z0-9]+$/.test(str);
 }
 
-// POST endpoint for /bfhl
+
 app.post('/bfhl', (req, res) => {
     try {
         const { data } = req.body;
 
-        // Validate input
+   
         if (!data || !Array.isArray(data)) {
             return res.status(400).json({
                 is_success: false,
@@ -43,14 +38,13 @@ app.post('/bfhl', (req, res) => {
             });
         }
 
-        // Initialize result arrays
+
         const odd_numbers = [];
         const even_numbers = [];
         const alphabets = [];
         const special_characters = [];
         let sum = 0;
 
-        // Process each element in the data array
         data.forEach(item => {
             const str = String(item);
 
@@ -70,7 +64,6 @@ app.post('/bfhl', (req, res) => {
             }
         });
 
-        // Create concatenated string in reverse order with alternating caps
         let concat_string = "";
         if (alphabets.length > 0) {
             const allAlphabets = alphabets.join('').split('');
@@ -85,7 +78,6 @@ app.post('/bfhl', (req, res) => {
             });
         }
 
-        // Return response
         res.status(200).json({
             is_success: true,
             user_id: USER_DATA.user_id,
@@ -108,14 +100,14 @@ app.post('/bfhl', (req, res) => {
     }
 });
 
-// GET endpoint for testing
+
 app.get('/bfhl', (req, res) => {
     res.status(200).json({ 
         operation_code: 1 
     });
 });
 
-// Default route
+
 app.get('/', (req, res) => {
     res.json({ 
         message: "BFHL API is running!",
@@ -126,7 +118,6 @@ app.get('/', (req, res) => {
     });
 });
 
-// For Vercel serverless deployment
 if (process.env.NODE_ENV !== 'production') {
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
