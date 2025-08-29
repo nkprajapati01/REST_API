@@ -48,8 +48,8 @@ class BFHLTester {
             deployed: "https://your-app.vercel.app/bfhl"
         };
 
-        this.requestTimeout = 10000; // 10 seconds timeout
-        this.currentRequest = null; // Track current request for cancellation
+        this.requestTimeout = 10000; 
+        this.currentRequest = null; 
 
         this.init();
     }
@@ -60,23 +60,23 @@ class BFHLTester {
     }
 
     bindEvents() {
-        // Example buttons
+
         document.querySelectorAll('.example-btn').forEach((btn, index) => {
             btn.addEventListener('click', () => this.loadExample(index));
         });
 
-        // API type toggle
+ 
         document.querySelectorAll('input[name="apiType"]').forEach(radio => {
             radio.addEventListener('change', () => this.updateApiUrl());
         });
 
-        // Control buttons
+
         document.getElementById('formatBtn').addEventListener('click', () => this.formatJSON());
         document.getElementById('clearBtn').addEventListener('click', () => this.clearInput());
         document.getElementById('testBtn').addEventListener('click', () => this.testAPI());
         document.getElementById('copyBtn').addEventListener('click', () => this.copyResponse());
 
-        // Enter key in textarea
+        
         document.getElementById('jsonInput').addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 'Enter') {
                 this.testAPI();
@@ -136,7 +136,6 @@ class BFHLTester {
         }
     }
 
-    // Create fetch request with timeout
     fetchWithTimeout(url, options, timeout = this.requestTimeout) {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), timeout);
@@ -166,7 +165,7 @@ class BFHLTester {
             return;
         }
 
-        // Cancel any existing request
+
         if (this.currentRequest) {
             this.currentRequest.abort();
         }
