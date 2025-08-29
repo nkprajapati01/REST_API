@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BFHL API Tester</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero__content">
+                <h1 class="hero__title">BFHL API Tester</h1>
+                <p class="hero__subtitle">Test and validate your BFHL data processing API with this modern interface</p>
+                <div class="hero__badge">
+                    <span class="method-badge">POST</span>
+                    <span class="route-badge">/bfhl</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <!-- API Configuration Section -->
+            <section class="config-section">
+                <div class="card">
+                    <div class="card__body">
+                        <h2>API Configuration</h2>
+                        <div class="config-toggle">
+                            <label class="toggle-option">
+                                <input type="radio" name="apiType" value="local" checked>
+                                <span>Local Development</span>
+                            </label>
+                            <label class="toggle-option">
+                                <input type="radio" name="apiType" value="deployed">
+                                <span>Deployed API</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="apiUrl">API Endpoint</label>
+                            <input type="text" id="apiUrl" class="form-control" placeholder="http://localhost:3000/bfhl" value="http://localhost:3000/bfhl">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="card">
+                    <div class="card__body">
+                        <h2>Request Data</h2>
+                        <div class="input-controls">
+                            <div class="quick-examples">
+                                <h3>Quick Examples:</h3>
+                                <div class="example-buttons">
+                                    <button class="btn btn--outline btn--sm example-btn" data-example="0">Example A</button>
+                                    <button class="btn btn--outline btn--sm example-btn" data-example="1">Example B</button>
+                                    <button class="btn btn--outline btn--sm example-btn" data-example="2">Example C</button>
+                                </div>
+                            </div>
+                            <div class="input-actions">
+                                <button class="btn btn--outline btn--sm" id="formatBtn">Format JSON</button>
+                                <button class="btn btn--outline btn--sm" id="clearBtn">Clear</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="jsonInput">JSON Input</label>
+                            <textarea id="jsonInput" class="form-control json-input" rows="8" placeholder='{"data": ["a","1","334","4","R", "$"]}'></textarea>
+                            <div class="input-hint">Enter your JSON data following the format: {"data": [...]}</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Test Section -->
+            <section class="test-section">
+                <div class="card">
+                    <div class="card__body">
+                        <div class="test-controls">
+                            <button class="btn btn--primary btn--lg" id="testBtn">
+                                <span class="btn-text">Test API</span>
+                                <span class="btn-spinner hidden">
+                                    <svg class="spinner" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"></circle>
+                                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" stroke-dasharray="31.416" stroke-dashoffset="31.416" opacity="0.75">
+                                            <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+                                            <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
+                                        </circle>
+                                    </svg>
+                                </span>
+                            </button>
+                            <div class="request-info">
+                                <div class="status-indicator">
+                                    <span class="status-dot"></span>
+                                    <span id="statusText">Ready</span>
+                                </div>
+                                <div class="response-time hidden" id="responseTime">Response: 0ms</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section hidden" id="resultsSection">
+                <h2>API Response</h2>
+                
+                <!-- Status & User Info -->
+                <div class="card">
+                    <div class="card__body">
+                        <h3>Status & User Information</h3>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Status:</label>
+                                <span id="responseStatus" class="status"></span>
+                            </div>
+                            <div class="info-item">
+                                <label>User ID:</label>
+                                <span id="responseUserId"></span>
+                            </div>
+                            <div class="info-item">
+                                <label>Email:</label>
+                                <span id="responseEmail"></span>
+                            </div>
+                            <div class="info-item">
+                                <label>Roll Number:</label>
+                                <span id="responseRollNumber"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Arrays -->
+                <div class="data-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Odd Numbers</h3>
+                            <div class="data-array" id="oddNumbers"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Even Numbers</h3>
+                            <div class="data-array" id="evenNumbers"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Alphabets</h3>
+                            <div class="data-array" id="alphabets"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Special Characters</h3>
+                            <div class="data-array" id="specialCharacters"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sum and Concatenation -->
+                <div class="results-grid">
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Sum</h3>
+                            <div class="result-value" id="sumResult"></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card__body">
+                            <h3>Concatenated String</h3>
+                            <div class="result-value" id="concatResult"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Raw Response -->
+                <div class="card">
+                    <div class="card__body">
+                        <div class="raw-response-header">
+                            <h3>Raw Response</h3>
+                            <button class="btn btn--outline btn--sm" id="copyBtn">Copy Response</button>
+                        </div>
+                        <pre class="raw-response" id="rawResponse"></pre>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div class="toast hidden" id="toast">
+        <div class="toast__content">
+            <span class="toast__message"></span>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

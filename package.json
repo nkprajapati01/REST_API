@@ -1,0 +1,24 @@
+
+{
+  "name": "bfhl-api",
+  "version": "1.0.0", 
+  "description": "BFHL API Challenge - Data Processing REST API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "keywords": ["api", "rest", "express", "vercel"],
+  "author": "BFHL Challenge",
+  "license": "MIT"
+}
